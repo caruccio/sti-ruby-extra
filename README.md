@@ -13,11 +13,12 @@ official [OpenShift Documentation](https://docs.openshift.org/latest/using_image
 Versions
 ---------------
 Ruby versions currently provided are:
+* ruby-1.9
 * ruby-2.0
 * ruby-2.2
 
 RHEL versions currently supported are:
-* RHEL7
+* RHEL7 (except for ruby1.9)
 
 CentOS versions currently supported are:
 * CentOS7
@@ -60,6 +61,9 @@ on all provided versions of Ruby.**
 
 Usage
 ---------------------------------
+
+For information about usage of Dockerfile for Ruby 1.9,
+see [usage documentation](1.9/README.md).
 
 For information about usage of Dockerfile for Ruby 2.0,
 see [usage documentation](2.0/README.md).

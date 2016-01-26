@@ -16,6 +16,11 @@
 OS=${1-$OS}
 VERSION=${2-$VERSION}
 
+if [ "${OS}" == "rhel7" ] && [ "${VERSION}" == "1.9" ] ;then
+  echo "ERROR: ruby-$VERSION is being discontinued for RHEL7"
+  exit 1
+fi
+
 DOCKERFILE_PATH=""
 
 test -z "$BASE_IMAGE_NAME" && {
