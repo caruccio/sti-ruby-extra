@@ -1,4 +1,4 @@
-FROM getupcloud/ruby-22-centos7:latest
+FROM openshift/ruby-22-centos7:latest
 
 USER root
 
