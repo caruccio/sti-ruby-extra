@@ -12,9 +12,10 @@ export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
 
 if ! id user >/dev/null; then
-    cat /etc/passwd && \
-    echo "user:x:${USER_ID}:${GROUP_ID}:Openshift User:${HOME}:/sbin/nologin \
-    > /tmp/passwd
+    {
+    cat /etc/passwd
+    echo "user:x:${USER_ID}:${GROUP_ID}:Openshift User:${HOME}:/sbin/nologin"
+    } > /tmp/passwd
 fi
 export LD_PRELOAD=libnss_wrapper.so
 export NSS_WRAPPER_PASSWD=/tmp/passwd
