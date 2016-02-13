@@ -17,6 +17,20 @@ if ! id user >/dev/null; then
     echo "user:x:${USER_ID}:${GROUP_ID}:Openshift User:${HOME}:/sbin/nologin"
     } > /tmp/passwd
 fi
+
 export LD_PRELOAD=libnss_wrapper.so
 export NSS_WRAPPER_PASSWD=/tmp/passwd
 export NSS_WRAPPER_GROUP=/etc/group
+
+# Setup anything that needs nss_wrapper here
+
+function crond-start ()
+{
+    # we need uid_wrapper so crond believes he is root, poor guy
+    LD_PRELOAD=libuid_wrapper.so:$LD_PRELOAD \
+    UID_WRAPPER=1 \
+    UID_WRAPPER_ROOT=1 \
+        crond -m off -p -s ${CROND_DEBUG:+-x ext,sch,proc,pars,load,misc,bit} ${1}
+}
+
+crond-start
