@@ -2,7 +2,7 @@ FROM getupcloud/ruby-19-centos7:latest
 
 USER root
 
-RUN INSTALL_PKGS="ImageMagick ImageMagick-devel nss_wrapper uid_wrapper" && \
+RUN INSTALL_PKGS="ImageMagick ImageMagick-devel cronie crontabs nss_wrapper uid_wrapper" && \
     yum install -y --setopt=tsflags=nodocs --enablerepo=centosplus $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
@@ -12,6 +12,6 @@ RUN INSTALL_PKGS="ImageMagick ImageMagick-devel nss_wrapper uid_wrapper" && \
     sed -i -s 's/^\(account\s\+include\s\+password-auth\)$/#\1/' /etc/pam.d/crond && \
     chmod -s /usr/bin/crontab
 
-COPY nss-wrapper-setup $STI_SCRIPTS_PATH
+COPY nss-wrapper-setup $STI_SCRIPTS_PATH/
 
 USER 1001
