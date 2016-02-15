@@ -21,6 +21,7 @@ RUN INSTALL_PKGS="ruby193 ruby193-ruby ruby193-ruby-devel ruby193-rubygem-rake v
     yum clean all -y
 
 RUN chmod 777 /var/spool/cron/ && \
+    chmod 775 /var/run && \
     chmod -s /usr/bin/crontab && \
     sed -i -s 's/^\(account\s\+include\s\+password-auth\)$/#\1/' /etc/pam.d/crond
 
