@@ -15,9 +15,17 @@ LABEL io.k8s.description="Platform for building and running Ruby 1.9 application
       io.openshift.tags="builder,ruby,ruby19"
 
 RUN INSTALL_PKGS="ruby193 ruby193-ruby ruby193-ruby-devel ruby193-rubygem-rake v8314 ruby193-rubygem-rails nodejs010" && \
+    EXTRA_INSTALL_PKGS="ImageMagick ImageMagick-devel cronie crontabs nss_wrapper uid_wrapper" && \
     yum install -y centos-release-scl && \
-    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && rpm -V $INSTALL_PKGS && \
+    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS $EXTRA_INSTALL_PKGS && rpm -V $INSTALL_PKGS $EXTRA_INSTALL_PKGS && \
     yum clean all -y
+
+# Setup for run crond as user
+RUN chmod 777 /var/spool/cron/ && \
+    chmod -s /usr/bin/crontab && \
+    sed -i -s 's/^\(account\s\+include\s\+password-auth\)$/#\1/' /etc/pam.d/crond
+
+COPY nss-wrapper-setup $STI_SCRIPTS_PATH/
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
