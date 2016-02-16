@@ -11,7 +11,7 @@ echo "Activating NSS wrapper"
 export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
 
-if ! id user >/dev/null; then
+if ! id user &>/dev/null; then
     {
     cat /etc/passwd
     echo "user:x:${USER_ID}:${GROUP_ID}:Openshift User:${HOME}:/sbin/nologin"

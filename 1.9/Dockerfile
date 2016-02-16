@@ -22,6 +22,7 @@ RUN INSTALL_PKGS="ruby193 ruby193-ruby ruby193-ruby-devel ruby193-rubygem-rake v
 
 # Setup for run crond as user
 RUN chmod 777 /var/spool/cron/ && \
+    chmod 777 /var/run/ && \
     chmod -s /usr/bin/crontab && \
     sed -i -s 's/^\(account\s\+include\s\+password-auth\)$/#\1/' /etc/pam.d/crond
 
