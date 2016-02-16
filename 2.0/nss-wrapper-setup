@@ -13,6 +13,7 @@ while [ $# -gt 0 ]; do
     case "$1" in
         -u) export_uid_wrapper=1 ;;
     esac
+    shift
 done
 
 export USER_ID=$(id -u)
