@@ -21,9 +21,8 @@ RUN INSTALL_PKGS="rh-ruby22 rh-ruby22-ruby-devel rh-ruby22-rubygem-rake v8314 rh
     yum clean all -y
 
 # Setup for run crond as user
-RUN chmod 777 /var/spool/cron/ && \
-    chmod 777 /var/run/ && \
-    chmod -s /usr/bin/crontab && \
+RUN chmod 777 /var/spool/cron/ /var/run/ && \
+    chmod u+s /usr/bin/crontab /lib64/libnss_wrapper.so* /lib64/libuid_wrapper.so* && \
     sed -i -s 's/^\(account\s\+include\s\+password-auth\)$/#\1/' /etc/pam.d/crond
 
 COPY nss-wrapper-setup $STI_SCRIPTS_PATH/

@@ -8,6 +8,13 @@
 
 echo "Activating NSS wrapper"
 
+export_uid_wrapper=0
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -u) export_uid_wrapper=1 ;;
+    esac
+done
+
 export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
 
@@ -23,6 +30,11 @@ export NSS_WRAPPER_PASSWD=/tmp/passwd
 export NSS_WRAPPER_GROUP=/etc/group
 
 # Setup anything that needs nss_wrapper here
+
+if [ $export_uid_wrapper != 0 ]; then
+    echo "Activating UID wrapper"
+    export LD_PRELOAD=libuid_wrapper.so:$LD_PRELOAD UID_WRAPPER=1 UID_WRAPPER_ROOT=1
+fi
 
 function crond-start ()
 {
