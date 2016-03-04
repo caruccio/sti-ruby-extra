@@ -15,7 +15,7 @@ LABEL io.k8s.description="Platform for building and running Ruby 1.9 application
       io.openshift.tags="builder,ruby,ruby19"
 
 RUN INSTALL_PKGS="ruby193 ruby193-ruby ruby193-ruby-devel ruby193-rubygem-rake v8314 ruby193-rubygem-rails nodejs010" && \
-    EXTRA_INSTALL_PKGS="ImageMagick ImageMagick-devel cronie crontabs nss_wrapper uid_wrapper" && \
+    EXTRA_INSTALL_PKGS="ImageMagick ImageMagick-devel cronie crontabs nss_wrapper uid_wrapper rh-postgresql94-postgresql" && \
     yum install -y centos-release-scl && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS $EXTRA_INSTALL_PKGS && rpm -V $INSTALL_PKGS $EXTRA_INSTALL_PKGS && \
     yum clean all -y
