@@ -20,12 +20,15 @@ RUN INSTALL_PKGS="ruby193 ruby193-ruby ruby193-ruby-devel ruby193-rubygem-rake v
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS $EXTRA_INSTALL_PKGS && rpm -V $INSTALL_PKGS $EXTRA_INSTALL_PKGS && \
     yum clean all -y
 
+RUN scl enable ruby193 'gem install --no-rdoc --no-ri aws-sdk --version 1.53.0'
+
 # Allow cron as user
 RUN chmod 777 /var/spool/cron/ /var/run/ && \
     chmod u-s /usr/bin/crontab /bin/crontab && \
     chmod u+s /usr/sbin/crond /lib64/libnss_wrapper.so* /lib64/libuid_wrapper.so* && \
     sed -i -s 's/^\(account\s\+include\s\+password-auth\)$/#\1/' /etc/pam.d/crond && \
-    echo -e 'user\ndefault' > /etc/cron.allow && rm -f /etc/cron.deny
+    echo -e 'user\ndefault' > /etc/cron.allow && rm -f /etc/cron.deny && \
+    rm -f /etc/cron.hourly/{0anacron,hourly.cron}
 
 COPY nss-wrapper-setup $STI_SCRIPTS_PATH/
 
